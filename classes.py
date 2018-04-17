@@ -8,6 +8,9 @@ class Protein:
         for j in range(len(self.sequence) - 1):
             print(self.sequence[j][0], end='-')
         print(self.sequence[len(self.sequence) - 1][0])
+        
+    def length(self):
+        print(len(self.sequence))
 
 myProtein = Protein('HHPHPHPP')
 myProtein.reveal()
