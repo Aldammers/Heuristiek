@@ -1,3 +1,5 @@
+# aanpassingen aangeven
+
 class Protein:
     def __init__(self, sequence):
         self.sequence = []
