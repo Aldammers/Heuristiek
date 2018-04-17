@@ -14,9 +14,17 @@ class Protein:
     def length(self):
         print(len(self.sequence))
 
-myProtein = Protein('HHPHPHPP')
-myProtein.reveal()
-
 class Grit:
-    def __init__(self):
+    def __init__(self, size):
         self.grit = []
+        row = []
+        for i in range(size):
+            row.append('0')
+        for j in range(size):
+            self.grit.append(row)
+			
+    def reveal(self):
+        for i in self.grit:
+            for j in i:
+                print(j, end='-')
+            print()
