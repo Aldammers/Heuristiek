@@ -1,30 +1,29 @@
 # aanpassingen aangeven
 
+
+
 class Protein:
     def __init__(self, sequence):
         self.sequence = []
+        self.grit = Grit(2*len(sequence) + 1)
         for i in range(len(sequence)):
-            self.sequence.append([sequence[i], 'M'])
+            self.sequence.append([sequence[i], [0,0]])
 
     def reveal(self):
         for j in self.sequence:
             print(j[0], end='-')
-        print(self.sequence[len(self.sequence) - 1][0])
-        
-    def length(self):
-        print(len(self.sequence))
+        print()
+
 
 class Grit:
     def __init__(self, size):
-        self.grit = []
-        row = []
-        for i in range(size):
-            row.append('0')
-        for j in range(size):
-            self.grit.append(row)
-			
+        self.grit = [['0' for x in range(size)] for y in range(size)]
+
     def reveal(self):
         for i in self.grit:
             for j in i:
                 print(j, end='-')
             print()
+
+    def change(self, i,j,v):
+        self.grit[i][j] = v
