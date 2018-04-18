@@ -28,8 +28,10 @@ def RandomFold(protein):
             coordinates.append(amino[1])
 
         else :
-            RandomFold(protein)
+            #print(0.0)
+            return 0.0
     #protein.grit.reveal()
+    #print (protein.folded_score())
     return protein.folded_score()
 
 def Random_n(protein, n):
@@ -44,12 +46,12 @@ def Random_n(protein, n):
             best_score = score
             best_protein = protein
 
-    best_protein.grit.reveal()
+    #best_protein.grit.reveal()
     print(best_score)
 
-myProtein = Protein('HHPPHPPPHHP')
-Random_n(myProtein, 10)
-    
+myProtein = Protein('HHPHHHPH')
+Random_n(myProtein, 10000)
+
 
 
     
