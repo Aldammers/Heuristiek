@@ -1,18 +1,54 @@
 from classes import *
 from random import randint
 
-myProtein = Protein('HHPPHPPHH')
-myProtein.reveal()
-myProtein.grit.reveal()
-
 def RandomFold(protein):
-    directions = ['up', 'down', 'left', 'right']
-    lastcoordinate = [len(protein.sequence) + 1, len(protein.sequence) +1]
+    directions = []
+    last_coordinate = [len(protein.sequence) + 1, len(protein.sequence) +1]
+    coordinates = [last_coordinate]
     for amino in protein.sequence:
-        direction = directions[randint(0, 3)]
-        print(direction)
-        
-RandomFold(myProtein)
+        directions = []
+
+        if protein.grit.grit[last_coordinate[0] + 1][last_coordinate[1]] == '0' :
+            directions.append([1,0])
+
+        if protein.grit.grit[last_coordinate[0] - 1][last_coordinate[1]] == '0' :
+            directions.append([-1,0])
+
+        if protein.grit.grit[last_coordinate[0]][last_coordinate[1] + 1] == '0' :
+            directions.append([0,1])
+
+        if protein.grit.grit[last_coordinate[0]][last_coordinate[1] -1 ] == '0' :
+            directions.append([0,-1])
+
+        if len(directions) > 0 :
+            direction = directions[randint(0, len(directions) - 1)]
+            amino[1] = [last_coordinate[0] + direction[0], last_coordinate[1] + direction[1]]
+            last_coordinate = amino[1]
+            protein.grit.grit[amino[1][0]][amino[1][1]] = amino[0]
+            coordinates.append(amino[1])
+
+        else :
+            RandomFold(protein)
+    #protein.grit.reveal()
+    return protein.folded_score()
+
+def Random_n(protein, n):
+    protein.reveal()
+    best_protein = protein
+    best_score = 0
+
+    for i in range(n):
+        protein.grit.reset()
+        score = RandomFold(protein)
+        if score > best_score:
+            best_score = score
+            best_protein = protein
+
+    best_protein.grit.reveal()
+    print(best_score)
+
+myProtein = Protein('HHPPHPPPHHP')
+Random_n(myProtein, 10)
     
 
 
