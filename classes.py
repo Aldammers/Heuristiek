@@ -5,7 +5,7 @@
 class Protein:
     def __init__(self, sequence):
         self.sequence = []
-        self.grit = Grit(2*len(sequence) + 1)
+        self.grit = Grit(2*len(sequence) + 3)
         for i in range(len(sequence)):
             self.sequence.append([sequence[i], [0,0]])
 
