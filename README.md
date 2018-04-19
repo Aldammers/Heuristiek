@@ -1,4 +1,9 @@
 # Heuristiek
+Authors:
+
+Stan Rozing
+Jan Marten
+Alexander Dammers 10528415
 
 Algoritmes voor Proteinfolding
 
