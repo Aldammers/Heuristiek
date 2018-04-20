@@ -20,7 +20,7 @@ class Protein:
             if self.sequence[i][0] == self.sequence[i + 1][0]:
                 if self.sequence[i][0] == 'H' :
                     correction += 1
-        return self.grit.score() - correction
+        return correction - self.grit.score()
 
 
 
