@@ -91,18 +91,18 @@ class Grit:
     # function to determine the score of a grit (the protein on it to be precise)
     def score(self):
         score = 0
-        for i in range(1, self.size, 2):
-            for j in range(1, self.size, 2):
+        for i in range(3, self.size - 2, 2):
+            for j in range(3, self.size - 2, 2):
 
                 # check for any bonds
-                if self.grit[i][j] != 'P':
-                    if self.grit[i+2][j] != 'P':
+                if self.grit[i][j] != 'P' and self.grit[i][j] != ' ':
+                    if self.grit[i+2][j] != 'P' and self.grit[i+2][j] != ' ':
                         score += 0.5
-                    if self.grit[i-2][j] != 'P':
+                    if self.grit[i-2][j] != 'P' and self.grit[i-2][j] != ' ':
                         score += 0.5
-                    if self.grit[i][j+2] != 'P':
+                    if self.grit[i][j+2] != 'P' and self.grit[i][j+2] != ' ':
                         score += 0.5
-                    if self.grit[i][j-2] != 'P':
+                    if self.grit[i][j-2] != 'P' and self.grit[i][j-2] != ' ':
                         score += 0.5
 
                 # check for C-C bonds
@@ -118,6 +118,7 @@ class Grit:
 
         return score
 
+    # function to check which neighbours are free
     def is_valid(self,m,n):
         directions = []
         if self.grit[m][n+2] == ' ':
