@@ -6,10 +6,11 @@ class Protein:
 
     #instantiate the grit and the sequence
     def __init__(self, sequence):
-        self.sequence = []
+        self.sequence = sequence
+        self.coordinates = []
         self.grit = Grit(4*len(sequence) + 9)
         for i in range(len(sequence)):
-            self.sequence.append([sequence[i], [0,0]])
+            self.coordinates.append([0,i])
 
     # function to reveal the sequence of the protein
     def reveal(self):
@@ -32,6 +33,18 @@ class Protein:
                 if self.sequence[i + 1][0] == 'C':
                     correction += 5
         return correction - self.grit.score()
+
+    def max_score(self):
+        max = 0
+        if self.sequence[0] == 'H':
+            max += 3
+        if self.sequence[len(self.sequence)] == 'H':
+            max += 3
+        for i in range(len(self.sequence) - 3):
+            if self.sequence[i + 1] == 'H':
+                max += 2
+        max = max//2
+        return max
 
 
 # Grit class
@@ -75,45 +88,44 @@ class Grit:
     def reset(self):
         self.grit = [[' ' for x in range(self.size)] for y in range(self.size)]
 
-    # function to determine the score of a grit(the protein on it to be precise)
+    # function to determine the score of a grit (the protein on it to be precise)
     def score(self):
         score = 0
         for i in range(1, self.size, 2):
             for j in range(1, self.size, 2):
 
-                # check for H-H bonds
-                if self.grit[i][j] == 'H':
-                    if self.grit[i+2][j] == 'H':
+                # check for any bonds
+                if self.grit[i][j] != 'P':
+                    if self.grit[i+2][j] != 'P':
                         score += 0.5
-                    if self.grit[i-2][j] == 'H':
+                    if self.grit[i-2][j] != 'P':
                         score += 0.5
-                    if self.grit[i][j+2] == 'H':
+                    if self.grit[i][j+2] != 'P':
                         score += 0.5
-                    if self.grit[i][j-2] == 'H':
+                    if self.grit[i][j-2] != 'P':
                         score += 0.5
-
-                # check for C-H bonds
-                if self.grit[i][j] == 'C':
-                    if self.grit[i+2][j] == 'H':
-                        score += 1
-                    if self.grit[i-2][j] == 'H':
-                        score += 1
-                    if self.grit[i][j+2] == 'H':
-                        score += 1
-                    if self.grit[i][j-2] == 'H':
-                        score += 1
 
                 # check for C-C bonds
                 if self.grit[i][j] == 'C':
                     if self.grit[i+2][j] == 'C':
-                        score += 2.5
+                        score += 2
                     if self.grit[i-2][j] == 'C':
-                        score += 2.5
+                        score += 2
                     if self.grit[i][j+2] == 'C':
-                        score += 2.5
+                        score += 2
                     if self.grit[i][j-2] == 'C':
-                        score += 2.5
-
-
+                        score += 2
 
         return score
+
+    def is_valid(self,m,n):
+        directions = []
+        if self.grit[m][n+2] == ' ':
+            directions.append([0,2])
+        if self.grit[m][n-2] == ' ':
+            directions.append([0,-2])
+        if self.grit[m-2][n] == ' ':
+            directions.append([-2,0])
+        if self.grit[m+2][n] == ' ':
+            directions.append([2,0])
+        return directions
