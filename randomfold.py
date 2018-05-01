@@ -11,7 +11,7 @@ def RandomFold(protein):
     coordinates = [last_coordinate]
     i = 0
 
-    # for each amino in the protein, randomly go into a direction
+    # for each amino acid in the protein, randomly go into a direction
     for amino in protein.sequence:
         directions = []
 
@@ -28,10 +28,10 @@ def RandomFold(protein):
         if protein.grit.grit[last_coordinate[0]][last_coordinate[1] - 2] == ' ' :
             directions.append([0,-2])
 
-        # if there are free directions, pick one and place the amino there
+        # if there are free directions, pick one and place the amino acid there
         if len(directions) > 0 :
 
-            # place the amino on the correct coordinates
+            # place the amino acid on the correct coordinates
             direction = directions[randint(0, len(directions) - 1)]
             amino[1] = [last_coordinate[0] + direction[0], last_coordinate[1] + direction[1]]
             protein.grit.grit[amino[1][0]][amino[1][1]] = amino[0]
@@ -90,5 +90,3 @@ def Random_n(protein, n):
     print("Folding: ")
     best_protein.grit.reveal()
     print("Score: ", best_score)
-
-    
