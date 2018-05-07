@@ -34,17 +34,26 @@ class Protein:
                     correction += 5
         return correction - self.grit.score()
 
-    def max_score(self):
-        max = 0
+    def upper_bound(self):
+        upper_bound = 0
         if self.sequence[0] == 'H':
-            max += 3
+            upper_bound += 3
         if self.sequence[len(self.sequence)] == 'H':
-            max += 3
+            upper_bound += 3
         for i in range(len(self.sequence) - 3):
             if self.sequence[i + 1] == 'H':
-                max += 2
-        max = max//2
-        return max
+                upper_bound += 2
+        upper_bound = upper_bound//2 - 4
+        return upper_bound
+
+    def directions_to_coordinates(self, directions):
+        self.coordinates[0] = [(4*len(self.sequence) + 9) // 2, (4*len(self.sequence) + 9) // 2]
+        i = 1
+        for direction in directions:
+
+            self.coordinates[i] = [self.coordinates[i - 1][0] + direction[0], self.coordinates[i - 1][1] + direction[1]]
+            i += 1
+
 
 
 # Grit class
@@ -91,18 +100,18 @@ class Grit:
     # function to determine the score of a grit (the protein on it to be precise)
     def score(self):
         score = 0
-        for i in range(3, self.size - 2, 2):
-            for j in range(3, self.size - 2, 2):
+        for i in range(1, self.size, 2):
+            for j in range(1, self.size, 2):
 
                 # check for any bonds
-                if self.grit[i][j] != 'P' and self.grit[i][j] != ' ':
-                    if self.grit[i+2][j] != 'P' and self.grit[i+2][j] != ' ':
+                if self.grit[i][j] != 'P':
+                    if self.grit[i+2][j] != 'P':
                         score += 0.5
-                    if self.grit[i-2][j] != 'P' and self.grit[i-2][j] != ' ':
+                    if self.grit[i-2][j] != 'P':
                         score += 0.5
-                    if self.grit[i][j+2] != 'P' and self.grit[i][j+2] != ' ':
+                    if self.grit[i][j+2] != 'P':
                         score += 0.5
-                    if self.grit[i][j-2] != 'P' and self.grit[i][j-2] != ' ':
+                    if self.grit[i][j-2] != 'P':
                         score += 0.5
 
                 # check for C-C bonds
@@ -118,7 +127,6 @@ class Grit:
 
         return score
 
-    # function to check which neighbours are free
     def is_valid(self,m,n):
         directions = []
         if self.grit[m][n+2] == ' ':
