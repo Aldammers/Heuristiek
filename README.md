@@ -34,7 +34,7 @@ Expanding Universe algoritme?
 
 Combineren van Hillclimber met een random aspect er in?
 
-Voor de week van 14/05
+<b>Voor de week van 14/05</b>
 --> State-space bepalen, lower and upper bound. Formule ontwikkelen?
 --> Beginnen met iteratief algoritme
 --> Greedy algoritme
