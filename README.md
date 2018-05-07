@@ -5,7 +5,7 @@ Authors:
 - Jan Marten
 - Alexander Dammers 10528415
 
-Algoritmes voor Proteinfolding
+<b>Algoritmes voor Proteinfolding<\b>
 
 Random algoritme
 Bouwt een random eiwit op de grid voor een aantal iteraties. De hoeveelheid iteraties moet van te voren worden aangegeven. Berekent de waarde van de verbindingen van het totale eiwit.
@@ -33,3 +33,8 @@ Probleem: Eerste stap is altijd rechtdoor, tweede stap ook etc ect. Misschien ra
 Expanding Universe algoritme?
 
 Combineren van Hillclimber met een random aspect er in?
+
+Voor de week van 14/05
+--> State-space bepalen, lower and upper bound. Formule ontwikkelen?
+--> Beginnen met iteratief algoritme
+--> Greedy algoritme
