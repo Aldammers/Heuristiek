@@ -5,7 +5,7 @@ Authors:
 - Jan Marten
 - Alexander Dammers 10528415
 
-<b>Algoritmes voor Proteinfolding<\b>
+<b>Algoritmes voor Proteinfolding</b>
 
 Random algoritme
 Bouwt een random eiwit op de grid voor een aantal iteraties. De hoeveelheid iteraties moet van te voren worden aangegeven. Berekent de waarde van de verbindingen van het totale eiwit.
