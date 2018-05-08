@@ -16,7 +16,7 @@ Alle Python scripts zijn te vinden in de map Code, en alle resultaten worde opge
 
 ### Testing
 
-Om het random algoritme te laten draainen gebruik de instructie:
+Om het random algoritme te laten draaien gebruik de instructie:
 
 ```
 python MainRandom.py
