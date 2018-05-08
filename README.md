@@ -12,7 +12,7 @@ Benodigden packages staan in de requirements.txt en zijn te downloaden via de co
 pip install -r requirements.txt
 ```
 ### Structure
-Alle Python scripts zijn te vinden in de map Code, en alle resultaten worde opgeslage in de map Results.
+Alle Python scripts zijn te vinden in de map Code, en alle resultaten worden opgeslagen in de map Results.
 
 ### Testing
 
@@ -27,6 +27,8 @@ Voor de Breath-First:
 ```
 python MainBreadth.py
 ```
+
+Greedy:
 
 
 ### Algoritmes voor Proteinfolding
