@@ -5,6 +5,13 @@ Authors:
 - Jan Marten
 - Alexander Dammers 10528415
 
+<h1> Vereisten </h1>
+Benodigden packages zijn te downloaden via de command:
+
+```
+pip install -r requirements.txt
+```
+
 <b>Algoritmes voor Proteinfolding</b>
 
 Random algoritme
