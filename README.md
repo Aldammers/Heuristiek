@@ -5,14 +5,31 @@ Authors:
 - Jan Marten
 - Alexander Dammers 10528415
 
-<h1> Vereisten </h1>
-Benodigden packages zijn te downloaden via de command:
+### Vereisten
+Benodigden packages staan in de requirements.txt en zijn te downloaden via de command:
 
 ```
 pip install -r requirements.txt
 ```
+### Structure
+Alle Python scripts zijn te vinden in de map Code, en alle resultaten worde opgeslage in de map Results.
 
-<b>Algoritmes voor Proteinfolding</b>
+### Testing
+
+Om het random algoritme te laten draainen gebruik de instructie:
+
+```
+python MainRandom.py
+```
+
+Voor de Breath-First:
+
+```
+python MainBreadth.py
+```
+
+
+### Algoritmes voor Proteinfolding
 
 Random algoritme
 Bouwt een random eiwit op de grid voor een aantal iteraties. De hoeveelheid iteraties moet van te voren worden aangegeven. Berekent de waarde van de verbindingen van het totale eiwit.
