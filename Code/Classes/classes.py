@@ -1,3 +1,5 @@
+# aanpassingen aangeven
+
 
 # protein class
 class Protein:
@@ -33,8 +35,8 @@ class Protein:
                 if self.sequence[i + 1][0] == 'C':
                     correction += 5
         return correction - self.grit.score()
-    
-    
+
+    # estimate a very rough upper bound for the best score
     def upper_bound(self):
         upper_bound = 0
         if self.sequence[0] == 'H':
@@ -47,16 +49,17 @@ class Protein:
         upper_bound = upper_bound//2 - 4
         return - upper_bound
 
-    
+    # calculates coordinates using directions, starting in the middle of the grit
     def directions_to_coordinates(self, directions):
         self.directions = directions
-        self.coordinates[0] = [(4*self.length + 9) // 2, (4*self.length + 9) // 2]
+        self.coordinates[0] = [self.grit.size // 2, self.grit.size // 2]
         i = 1
         for direction in directions:
 
             self.coordinates[i] = [self.coordinates[i - 1][0] + 2*direction[0], self.coordinates[i - 1][1] + 2*direction[1]]
             i += 1
 
+    # fill in the amino acids at the right coordinates
     def fill_grit(self):
 
         cursor = [self.grit.size // 2, self.grit.size // 2]
@@ -74,6 +77,7 @@ class Protein:
         j = self.length - 1
         self.grit.grit[cursor[0]][cursor[1]] = self.sequence[j]
 
+    # calculate the score, ireating over the folded protein
     def ez_score(self):
         score = 0
 
@@ -219,6 +223,7 @@ class Grit:
 
         return score
 
+    # determine which position surrounding an amino acid are still available
     def is_valid(self, m, n):
         directions = []
         if self.grit[m][n+2] == ' ':
