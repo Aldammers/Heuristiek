@@ -3,7 +3,7 @@ import queue
 import copy
 
 def choose():
-    protein = Protein('HHPHHHPH')
+
     file = open("data.txt","r")
     data = file.readlines()
     for i in range(len(data)):
@@ -11,11 +11,9 @@ def choose():
     print()
     protein_number = int(input("Enter the number of he protein you wish to fold: "))
     if protein_number in range(1,10):
-        protein = Protein(data[protein_number - 1])
-    return protein
-
-
-
+        proteinsequence = data[protein_number - 1]
+        proteinsequence = proteinsequence.rstrip()
+    return proteinsequence
 
 def validate(directions, n):
     plain = [[0 for x in range(2*n - 1)] for y in range(2*n - 1)]
@@ -33,10 +31,6 @@ def validate(directions, n):
         x, y = x + direction[0], y + direction[1]
         plain[x][y] = 1
 
-    #for i in range(len(plain)):
-    #    print(plain[i])
-    #print()
-
     if has_bend:
         if plain[x + 1][y] == 0:
             options.append([1,0])
@@ -51,7 +45,6 @@ def validate(directions, n):
     return options
 
 
-
 def breadth(length):
 
     possibilities = queue.Queue()
@@ -61,7 +54,6 @@ def breadth(length):
     for i in range(length - 2):
         n += 1
         old_width = width
-        print(old_width)
         for i in range(width):
 
             directions = possibilities.get()
@@ -76,7 +68,6 @@ def breadth(length):
                 possibilities.put(new_directions)
 
         width -= old_width
-        print(width)
 
     return possibilities
 
@@ -84,21 +75,37 @@ def convert_queue(sequence, possibilities):
     proteins = []
     while not possibilities.empty():
 
+
         directions = possibilities.get()
         protein = Protein(sequence)
         protein.directions_to_coordinates(directions)
+        protein.fill_grit()
         proteins.append(protein)
 
     return proteins
 
 def found_score(proteins):
     best_score = 0
+    good_protein = Protein('H')
+    good_proteins = []
+
 
     for protein in proteins:
 
-        score = protein.folded_score()
-        if score < best_score:
-            best_score = score
-            best_protein = copy.deepcopy(protein)
+        #protein.grit.reveal()
 
-    return score
+        score = protein.ez_score()
+
+        if score < best_score:
+            good_proteins = []
+            best_score = score
+
+            good_protein = copy.deepcopy(protein)
+            good_proteins.append(good_protein)
+
+        elif score == best_score:
+
+            good_protein = copy.deepcopy(protein)
+            good_proteins.append(good_protein)
+
+    return best_score, good_proteins
