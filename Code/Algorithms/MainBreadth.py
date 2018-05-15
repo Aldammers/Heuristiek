@@ -1,12 +1,13 @@
 from classes import *
 from BreadthFirst import *
 
-protein = choose()
-foldings = breadth(len(protein.sequence) - 1)
-#while not foldings.empty():
-#
-#   folding = foldings.get()
-#   print(folding)
-proteins = convert_queue(protein.sequence, foldings)
+proteinsequence = choose()
+print(proteinsequence)
+foldings = breadth(len(proteinsequence))
+
+proteins = convert_queue(proteinsequence, foldings)
+
 result = found_score(proteins)
-print(result)
+print(result[0])
+for protein in result[1]:
+    protein.grit.reveal()
