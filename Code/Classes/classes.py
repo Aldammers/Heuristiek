@@ -45,7 +45,7 @@ class Protein:
             if self.sequence[i + 1] == 'H':
                 upper_bound += 2
         upper_bound = upper_bound//2 - 4
-        return upper_bound
+        return - upper_bound
 
     
     def directions_to_coordinates(self, directions):
