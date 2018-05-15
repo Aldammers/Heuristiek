@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri May  4 11:36:08 2018
-
-@author: rozin
-"""
-
-# aanpassingen aangeven
-
 
 # protein class
 class Protein:
@@ -14,9 +5,11 @@ class Protein:
     #instantiate the grit and the sequence
     def __init__(self, sequence):
         self.sequence = sequence
+        self.length = len(sequence)
         self.coordinates = []
-        self.grit = Grit(4*len(sequence) + 9)
-        for i in range(len(sequence)):
+        self.directions = []
+        self.grit = Grit(4*self.length + 9)
+        for i in range(self.length):
             self.coordinates.append([0,i])
 
     # function to reveal the sequence of the protein
@@ -28,7 +21,7 @@ class Protein:
     # function to return the score of a protein when folded
     def folded_score(self):
         correction = 0
-        for i in range(len(self.sequence) - 1):
+        for i in range(self.length - 1):
             if self.sequence[i][0] == 'H':
                 if self.sequence[i + 1][0] == 'H' :
                     correction += 1
@@ -40,18 +33,119 @@ class Protein:
                 if self.sequence[i + 1][0] == 'C':
                     correction += 5
         return correction - self.grit.score()
-
-    def max_score(self):
-        max = 0
+    
+    
+    def upper_bound(self):
+        upper_bound = 0
         if self.sequence[0] == 'H':
-            max += 3
-        if self.sequence[len(self.sequence)] == 'H':
-            max += 3
-        for i in range(len(self.sequence) - 3):
+            upper_bound += 3
+        if self.sequence[self.length] == 'H':
+            upper_bound += 3
+        for i in range(self.length - 3):
             if self.sequence[i + 1] == 'H':
-                max += 2
-        max = max//2
-        return max
+                upper_bound += 2
+        upper_bound = upper_bound//2 - 4
+        return upper_bound
+
+    
+    def directions_to_coordinates(self, directions):
+        self.directions = directions
+        self.coordinates[0] = [(4*self.length + 9) // 2, (4*self.length + 9) // 2]
+        i = 1
+        for direction in directions:
+
+            self.coordinates[i] = [self.coordinates[i - 1][0] + 2*direction[0], self.coordinates[i - 1][1] + 2*direction[1]]
+            i += 1
+
+    def fill_grit(self):
+
+        cursor = [self.grit.size // 2, self.grit.size // 2]
+
+        for i in range(self.length - 1):
+
+            self.grit.grit[cursor[0]][cursor[1]] = self.sequence[i]
+            if self.directions[i][0] == 0:
+                self.grit.grit[cursor[0] + self.directions[i][0]][cursor[1]  + self.directions[i][1]] = '-'
+            else:
+                self.grit.grit[cursor[0] + self.directions[i][0]][cursor[1]  + self.directions[i][1]] = '|'
+
+            cursor[0] = cursor[0] + 2 * self.directions[i][0]
+            cursor[1] = cursor[1] + 2 * self.directions[i][1]
+        j = self.length - 1
+        self.grit.grit[cursor[0]][cursor[1]] = self.sequence[j]
+
+    def ez_score(self):
+        score = 0
+
+        def invert(direction):
+            new_direction = [0,0]
+            new_direction[0] = - 2 * direction[0]
+            new_direction[1] = - 2 * direction[1]
+            return new_direction
+
+        def fuck_stan(direction):
+            new_direction = [0,0]
+            new_direction[0] = 2 * direction[0]
+            new_direction[1] = 2 * direction[1]
+            return new_direction
+
+        surrounding = [[0,2],[2,0],[0,-2],[-2,0]]
+        cursor = [self.grit.size // 2, self.grit.size // 2]
+
+        if self.sequence[0] == 'H':
+            for tile in surrounding:
+                if not tile == [0,2]:
+                    if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'C' or self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'H':
+                        score += 1
+
+        elif self.sequence[0] == 'C':
+            for tile in surrounding:
+                if not tile == [0,2]:
+                    if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'C':
+                        score += 5
+                    if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'H':
+                        score += 1
+
+
+        cursor[0] = cursor[0] + 2 * self.directions[0][0]
+        cursor[1] = cursor[1] + 2 * self.directions[0][1]
+
+
+        for i in range(1, self.length - 1):
+            if self.sequence[i] == 'H':
+                for tile in surrounding:
+                    if not tile in (invert(self.directions[i - 1]), fuck_stan(self.directions[i])):
+                        if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'C' or self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'H':
+                            score += 1
+
+            elif self.sequence[i] == 'C':
+                for tile in surrounding:
+                    if not tile in (invert(self.directions[i - 1]), fuck_stan(self.directions[i])):
+                        if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'C':
+                            score += 5
+                        if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'H':
+                            score += 1
+
+            cursor[0] = cursor[0] + 2 * self.directions[i][0]
+            cursor[1] = cursor[1] + 2 * self.directions[i][1]
+
+        if self.sequence[self.length - 1] == 'H':
+            for tile in surrounding:
+                if not tile == invert(self.directions[self.length - 2]):
+                    if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'C' or self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'H':
+                        score += 1
+
+        elif self.sequence[self.length - 1] == 'C':
+            for tile in surrounding:
+                if not tile == invert(self.directions[self.length - 2]):
+                    if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'C':
+                        score += 5
+                    if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'H':
+                        score += 1
+
+        return -score//2
+
+
 
 
 # Grit class
@@ -125,8 +219,7 @@ class Grit:
 
         return score
 
-    # function to check which neighbours are free
-    def is_valid(self,m,n):
+    def is_valid(self, m, n):
         directions = []
         if self.grit[m][n+2] == ' ':
             directions.append([0,2])
