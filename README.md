@@ -28,7 +28,16 @@ Voor de Breath-First:
 python MainBreadth.py
 ```
 
-Greedy:
+RandomHalfs:
+```
+python RandomHalfs.py
+```
+
+PieceWise Breadth:
+```
+python PiecewiseBreadth.py
+```
+
 
 
 ### Algoritmes voor Proteinfolding
