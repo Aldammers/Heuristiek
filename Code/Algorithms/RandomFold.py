@@ -1,13 +1,12 @@
-from classes import *
 from random import randint
 import copy
 
 # function to randomly fold a protein
-def RandomFold(protein):
+def RandomFold(protein, startingpoint):
 
     # instantiate variables
     directions = []
-    last_coordinate = [2*len(protein.sequence) + 3, 2*len(protein.sequence) + 3]
+    last_coordinate = startingpoint
     start = True
 
     # for each amino acid in the protein, randomly go into a direction
@@ -44,12 +43,7 @@ def RandomFold(protein):
     return protein.folded_score()
 
 # function to randomly fold a protein n times
-def Random_n(protein, n):
-
-    # show the protein at the beginning
-    protein.reveal()
-    print("Folding...")
-    print()
+def Random_n(protein, n, startingpoint):
 
     # instantiate variables
     best_protein = protein
@@ -58,14 +52,12 @@ def Random_n(protein, n):
     # fold n times
     for i in range(n):
         protein.grit.reset()
-        score = RandomFold(protein)
+        score = RandomFold(protein, startingpoint)
 
         # keep the score and folding if it is the best until now
         if score < best_score:
             best_score = score
             best_protein = copy.deepcopy(protein)
 
-    # show the best folding and score
-    print("Folding: ")
-    best_protein.grit.reveal()
-    print("Score: ", best_score)
+    # return the best folding and score
+    return(best_protein, best_score)
