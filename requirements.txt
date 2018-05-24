@@ -1,4 +1,4 @@
 random (kan eruit, is een standaard library van Python) 
 copy
-qeue
+queue
 timeit
