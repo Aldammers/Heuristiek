@@ -28,9 +28,9 @@ Voor de Breath-First:
 python MainBreadth.py
 ```
 
-RandomHalfs:
+Random Piecewise:
 ```
-python RandomHalfs.py
+python MainRP.py
 ```
 
 PieceWise Breadth:
