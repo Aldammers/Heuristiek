@@ -1,3 +1,4 @@
 random (kan eruit, is een standaard library van Python) 
 copy
-cs50
+qeue
+timeit
