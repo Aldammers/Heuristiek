@@ -1,5 +1,6 @@
 import RandomPiecewise as rp
 import classes as c
+import timeit
 
 
 protein1 = c.Protein('HHPHHHPH')
@@ -18,13 +19,16 @@ n = input('How many times do you wish to fold all of the proteins? 10.000 times 
 n = int(n)
 
 for i in range(len(proteins)):
+    start = timeit.default_timer()
     protein = proteins[i]
     print('Protein', i + 1, 'gives a score of: ', end = '')
     startingpoint = [2*len(protein.sequence) + 3, 2*len(protein.sequence) + 3]
     protein.grit.reset()
     stepsize = protein.length // 2
     results = rp.RandomPiece_n(protein, n, startingpoint, stepsize)
+    stop = timeit.default_timer()
     print(results[1])
+    print ("Runtime: ", stop - start, "seconds")
     
     
     
