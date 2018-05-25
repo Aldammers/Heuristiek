@@ -1,4 +1,4 @@
-from classes import *
+from Classes.classes import *
 import queue
 import copy
 
