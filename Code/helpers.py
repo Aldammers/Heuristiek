@@ -86,12 +86,15 @@ def ChooseAlgortihm(proteinsequence):
         # randomfold the protein n times
         results = rf.RandomN(protein, n, startingpoint)
         stop = t.default_timer()
+        results[0].coordinatesToDirections()
+        storeData(proteinsequence, algorithms[algorithm - 1], [results[0]], results[1], stop - start)
         
         # show the results
         results[0].grit.reveal()
         print('Score: ', results[1])
         print("This is the folding with the best score of the", n, "foldings we tried!")
         print("It took", stop - start, "seconds.")
+		
     
 
     # RandomHalfs
@@ -112,6 +115,8 @@ def ChooseAlgortihm(proteinsequence):
         # randomfold the halfs n times
         results = rp.RandomHalfsN(protein, n, startingpoint)
         stop = t.default_timer()
+        results[0].coordinatesToDirections()
+        storeData(proteinsequence, algorithms[algorithm - 1], [results[0]], results[1], stop - start)
         
         # show the results
         results[0].grit.reveal()
@@ -124,18 +129,39 @@ def ChooseAlgortihm(proteinsequence):
         # use breadthfirst on your protein
         start = t.default_timer()
         foldings = bf.breadth(len(proteinsequence))
-        proteins = bf.convert_queue(proteinsequence, foldings)
+        proteins = bf.convertQueue(proteinsequence, foldings)
         
         # show the results
-        result = bf.found_score(proteins)
+        result = bf.foundScore(proteins)
         stop = t.default_timer()
+        storeData(proteinsequence, algorithms[algorithm - 1], result[1], stop - start)
         for protein in result[1]:
             protein.grit.reveal()
-        print("The best possible score for this protein is", result[0], "and these are all the best foldings there are.")
+        print("The best possible score for this protein is", result[0], result[0], "and these are all the best foldings there are.")
         print("It took", stop - start, "seconds.")
     
     #PiecewiseBreadth
-    #elif algorithm == 4:
+    elif algorithm == 4:
+        start = t.default_timer()
+        segments = {'HHPHHHPH': ['HHPHHHPH'],
+                    'HHPHHHPHPHHHPH': ['HHPHHHPHPHHHPH'],
+                    'HPHPPHHPHPPHPHHPPHPH': ['HPHPPHHPHPPHPH','HPPHPH'],
+                    'PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP': ['PPPHHPPHH','PPPPPH','HHHHHH','PPHH','PPPPH','HPPH','PP'],
+                    'HHPHPHPHPHHHHPHPPPHPPPHPPPPHPPPHPPPHPHHHHPHPHPHPHH': ['HHPHPHPH','PHHHH','PHPPPH','PPPH','PPPPH','PPPH','PPPH','PH','HHH','PHPH','PHPHH'],
+                    'PPCHHPPCHPPPPCHHHHCHHPPHHPPPPHHPPHPP': ['PPCHHPPC','HPPPPC','HHHHC','HHPPH','HPPPPH','HPPH','PP'],
+                    'CPPCHPPCHPPCPPHHHHHHCCPCHPPCPCHPPHPC': ['CPPCHPPC','HPPC','PPHHH','HHHC','CPCH','PPC','PC','HPPH','PC'],
+                    'HCPHPCPHPCHCHPHPPPHPPPHPPPPHPCPHPPPHPHHHCCHCHCHCHH': ['HCPHPC','PHPCHC','HPH','PPPH','PPPH','PPPPH','PC','PH','PPPH','PH','HHC','CHC','HCHC','HH'],
+                    'HCPHPHPHCHHHHPCCPPHPPPHPPPPCPPPHPPPHPHHHHCHPHPHPHH': ['HCPHPHPHC','HHHH','PCC','PPH','PPPH','PPPPC','PPPH','PPPH','PH','HHHC','HPH','PH','PHH']}[proteinsequence]
+        protein = c.Protein(proteinsequence)
+        result = bf.concatenate(segments[0], [], segments, False, protein.sequence, 0)
+        stop = t.default_timer()
+        storeData(proteinsequence, algorithms[algorithm - 1], result[1], result[0], stop - start)
+
+        for protein in result[1]:
+            protein.grit.reveal()
+
+        print("The best possible score for this protein is", result[0], "and these are all the best foldings there are.")
+        print("It took", stop - start, "seconds.")
         
         
 def checkInt(string):
@@ -145,3 +171,22 @@ def checkInt(string):
             return False
     return True
 
+def storeData(proteinsequence, method, proteins, score, run_time):
+    filename = method + "Results.txt"
+    file = open(filename, "a")
+    file.write(proteinsequence)
+    file.write('\n')
+    file.write(method)
+    file.write('\n')
+    if method == 'PiecewiseBreadth':
+        file.write(str(segmentise(proteinsequence)))
+        file.write('\n')
+    if not proteins == []:
+        file.write(str(score))
+    file.write('\n')
+    file.write(str(run_time))
+    file.write('\n')
+    for protein in proteins:
+        file.write(str(protein.directions))
+        file.write('\n')
+    file.close()
