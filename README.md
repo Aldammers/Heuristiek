@@ -12,7 +12,10 @@ Benodigden packages staan in de requirements.txt en zijn te downloaden via de co
 pip install -r requirements.txt
 ```
 ### Structure
-Alle Python scripts zijn te vinden in de map Code, en alle resultaten worden opgeslagen in de map Results.
+
+Our algorithms and detials about them go into out algorithm folder: [Algorithms](/Code/Algorithms).
+
+To find our research and results and conclusions check out our experimentation: [Results](/Results).
 
 ### Testing
 
@@ -37,15 +40,6 @@ PieceWise Breadth:
 ```
 python PiecewiseBreadth.py
 ```
-
-
-
-### Documents
-
-
-Our algorithms and detials about them go into out algorithm folder: [Algorithms](/Code/Algorithms).
-
-To find our research and results and conclusions check out our experimentation: [Results](/Results).
 
 
 
