@@ -1,3 +1,6 @@
+# aanpassingen aangeven
+
+
 # protein class
 class Protein:
 
@@ -18,7 +21,7 @@ class Protein:
         print()
 
     # function to return the score of a protein when folded
-    def folded_score(self):
+    def foldedScore(self):
         correction = 0
         for i in range(self.length - 1):
             if self.sequence[i][0] == 'H':
@@ -33,31 +36,8 @@ class Protein:
                     correction += 5
         return correction - self.grit.score()
 
-    # estimate a very rough upper bound for the best score
-    def upper_bound(self):
-        upper_bound = 0
-        if self.sequence[0] == 'H':
-            upper_bound += 3
-        if self.sequence[self.length] == 'H':
-            upper_bound += 3
-        for i in range(self.length - 3):
-            if self.sequence[i + 1] == 'H':
-                upper_bound += 2
-        upper_bound = upper_bound//2 - 4
-        return - upper_bound
-
-    # calculates coordinates using directions, starting in the middle of the grit
-    def directions_to_coordinates(self):
-
-        self.coordinates[0] = [self.grit.size // 2, self.grit.size // 2]
-        i = 1
-        for direction in self.directions:
-
-            self.coordinates[i] = [self.coordinates[i - 1][0] + 2*direction[0], self.coordinates[i - 1][1] + 2*direction[1]]
-            i += 1
-
     # fill in the amino acids at the right coordinates
-    def fill_grit(self):
+    def fillGrit(self):
 
         cursor = [self.grit.size // 2, self.grit.size // 2]
 
@@ -75,7 +55,7 @@ class Protein:
         self.grit.grit[cursor[0]][cursor[1]] = self.sequence[j]
 
     # calculate the score, ireating over the folded protein
-    def ez_score(self):
+    def ezScore(self):
         score = 0
 
         def invert(direction):
@@ -84,7 +64,7 @@ class Protein:
             new_direction[1] = - 2 * direction[1]
             return new_direction
 
-        def fuck_stan(direction):
+        def normalise(direction):
             new_direction = [0,0]
             new_direction[0] = 2 * direction[0]
             new_direction[1] = 2 * direction[1]
@@ -115,13 +95,13 @@ class Protein:
         for i in range(1, self.length - 1):
             if self.sequence[i] == 'H':
                 for tile in surrounding:
-                    if not tile in (invert(self.directions[i - 1]), fuck_stan(self.directions[i])):
+                    if not tile in (invert(self.directions[i - 1]), normalise(self.directions[i])):
                         if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'C' or self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'H':
                             score += 1
 
             elif self.sequence[i] == 'C':
                 for tile in surrounding:
-                    if not tile in (invert(self.directions[i - 1]), fuck_stan(self.directions[i])):
+                    if not tile in (invert(self.directions[i - 1]), normalise(self.directions[i])):
                         if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'C':
                             score += 5
                         if self.grit.grit[cursor[0] + tile[0]][cursor[1] + tile[1]] == 'H':
@@ -179,6 +159,27 @@ class Protein:
                     c = i
             return segments
 
+    def storeData(self, method, proteins, run_time):
+        filename = method + "Results.txt"
+        file = open(filename, "a")
+        file.write(self.sequence)
+        file.write('\n')
+        file.write(method)
+        file.write('\n')
+        if method == 'PiecewiseBreadth':
+            strsegmentation = str(self.segmentise(0,''))
+            file.write(strsegmentation)
+        file.write('\n')
+        if not proteins == []:
+            file.write(proteins[0].ezScore())
+        file.write('\n')
+        file.write(str(run_time))
+        for protein in proteins:
+            directions = str(protein.directions)
+            file.write(directions)
+            file.write('\n')
+        file.close()
+
 
 
 # Grit class
@@ -190,7 +191,7 @@ class Grit:
         self.size = size
 
     # function which finds the place of the protein in the grit, so that no useless part of the grit gets printed
-    def protein_place(self):
+    def proteinPlace(self):
         self.top = self.size
         self.left = self.size
         self.right = 0
@@ -211,7 +212,7 @@ class Grit:
 
     # show the grit
     def reveal(self):
-        self.protein_place()
+        self.proteinPlace()
         for i in range(self.top - 1, self.bottom + 2):
             for j in range(self.left - 1, self.right + 2):
                 print(self.grit[i][j], end=' ')
@@ -253,7 +254,7 @@ class Grit:
         return score
 
     # determine which position surrounding an amino acid are still available
-    def is_valid(self, m, n):
+    def isValid(self, m, n):
         directions = []
         if self.grit[m][n+2] == ' ':
             directions.append([0,1])
