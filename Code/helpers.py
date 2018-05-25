@@ -9,8 +9,9 @@ def ChooseProtein():
     # open the file with proteins and display them
     file = open("data.txt","r")
     data = file.readlines()
-    for i in range(len(data)-1):
+    for i in range(len(data)):
         print(i + 1, data[i], end='')
+    print()
     
     # also give the user an option to input another protein    
     print(10, "Input another protein")
