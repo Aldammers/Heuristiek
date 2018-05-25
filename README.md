@@ -50,7 +50,7 @@ Same as the random algorithm, but it wil cut the protein in 2 pieces. And then f
 ### How to use Breadth First Piecewise:
 
         1. Start main: 'python main.py'
-        2. Choose an algorithm (1 to 9)
-        3. Choose Piece Size, to get optimized result look at results table
+        2. Choose a protein
+        3. Choose an algorithm to run
         
  
