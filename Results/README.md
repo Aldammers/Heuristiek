@@ -12,6 +12,7 @@
 | C2    | HCPHPCPHPCHCHPHPPPHPPPHPPPPHPCPHPPPHPHHHCCHCHCHCHH | -22          |  -         | -20               | -27               |
 | C3    | HCPHPHPHCHHHHPCCPPHPPPHPPPPCPPPHPPPHPHHHHCHPHPHPHH | -19          |  -         | -26               | -29               |
 
+### Results 250.000 iteraties Random & Random Halfs
 | Code: | Protein                                            | Random       | Random Halfs      | 
 |-------|----------------------------------------------------|--------------|-------------------|
 | P0    | HHPHHHPH                                           | -3           | -3                |
