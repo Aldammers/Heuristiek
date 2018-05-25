@@ -1,6 +1,3 @@
-# aanpassingen aangeven
-
-
 # protein class
 class Protein:
 
@@ -125,62 +122,6 @@ class Protein:
                         score += 1
 
         return -score//2
-
-    def segmentise(self, argument, method):
-        if method == 'default':
-            segment_size = argument
-            segments = []
-            c = 0
-            while c < len(self.sequence) - segment_size:
-                segments.append(self.sequence[c:c+segment_size])
-                c += segment_size
-            segments.append(self.sequence[c:len(self.sequence)])
-            return segments
-
-        elif method == 'manual':
-            segments = argument
-            return segments
-
-        elif method == 'cleverly':
-            segment = self.sequence[0]
-            H = self.sequence.count('H')
-            P = self.sequence.count('P')
-            segments = []
-            c = 0
-            for i in range(self.length):
-                segment = self.sequence[c:i]
-                partialH = segment.count('H')
-                partialP = segment.count('P')
-                if i - c > 7:
-                    segments.append(segment)
-                    c = i
-                elif H * partialP >= P * partialH:
-                    segments.append(segment)
-                    c = i
-            return segments
-
-    def storeData(self, method, proteins, run_time):
-        filename = method + "Results.txt"
-        file = open(filename, "a")
-        file.write(self.sequence)
-        file.write('\n')
-        file.write(method)
-        file.write('\n')
-        if method == 'PiecewiseBreadth':
-            strsegmentation = str(self.segmentise(0,''))
-            file.write(strsegmentation)
-        file.write('\n')
-        if not proteins == []:
-            file.write(proteins[0].ezScore())
-        file.write('\n')
-        file.write(str(run_time))
-        for protein in proteins:
-            directions = str(protein.directions)
-            file.write(directions)
-            file.write('\n')
-        file.close()
-
-
 
 # Grit class
 class Grit:
