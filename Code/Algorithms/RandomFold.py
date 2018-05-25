@@ -13,7 +13,7 @@ def RandomFold(protein, startingpoint):
     for i in range(len(protein.sequence)):
 
         # looks which directions are available
-        directions = protein.grit.is_valid(last_coordinate[0], last_coordinate[1])
+        directions = protein.grit.isValid(last_coordinate[0], last_coordinate[1])
 
         # if there are free directions, pick one and place the amino acid there
         if len(directions) > 0 :
@@ -40,10 +40,10 @@ def RandomFold(protein, startingpoint):
             return 0.0
 
     # return the score of the folded protein
-    return protein.folded_score()
+    return protein.FoldedScore()
 
 # function to randomly fold a protein n times
-def Random_n(protein, n, startingpoint):
+def RandomN(protein, n, startingpoint):
 
     # instantiate variables
     best_protein = protein
