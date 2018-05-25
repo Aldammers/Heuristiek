@@ -49,10 +49,9 @@ class Protein:
         self.grit.grit[cursor[0]][cursor[1]] = self.sequence[j]
         
     def coordinatesToDirections(self):
-        self.directions = []
         for i in range(self.length - 1):
-            direction0 = (self.coordinates[i+1][0] - self.coordinates[i][0]) // 2
-            direction1 = (self.coordinates[i+1][1] - self.coordinates[i][1]) // 2
+            direction1 = (self.coordinates[i+1][0] - self.coordinates[i][0]) // 2
+            direction0 = (self.coordinates[i+1][1] - self.coordinates[i][1]) // 2
             direction = [direction0, direction1]
             self.directions.append(direction)
 
