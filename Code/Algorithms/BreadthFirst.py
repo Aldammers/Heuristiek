@@ -21,7 +21,7 @@ def validate(directions, n):
     has_bend = False
 
 
-    x, y = n, n
+    x, y = n - 1, n - 1
 
     plain[x][y] = 1
 
@@ -75,10 +75,10 @@ def convert_queue(sequence, possibilities):
     proteins = []
     while not possibilities.empty():
 
-
         directions = possibilities.get()
         protein = Protein(sequence)
-        protein.directions_to_coordinates(directions)
+        protein.directions = directions
+        #protein.directions_to_coordinates()
         protein.fill_grit()
         proteins.append(protein)
 
@@ -109,3 +109,73 @@ def found_score(proteins):
             good_proteins.append(good_protein)
 
     return best_score, good_proteins
+
+
+
+# extention for piecewise method
+
+def piecewisebreadth(length, progressions):
+
+    possibilities = queue.Queue()
+    for progression in progressions:
+        possibilities.put(progression)
+    width, n = len(progressions), len(progressions[0]) + 1
+
+    for i in range(length):
+        n += 1
+        old_width = width
+        for i in range(width):
+
+            directions = possibilities.get()
+
+            options = validate(directions, n)
+
+            width += len(options)
+
+            for option in options:
+                new_directions = copy.deepcopy(directions)
+                new_directions.append(option)
+                possibilities.put(new_directions)
+
+        width -= old_width
+
+    return possibilities
+
+def concatenate(concatenation, progressions, segments, initiated, sequence, n):
+    if progressions == [] and not n == 0:
+        print('All proceeding possibilities using this segmentation were exhausted, sawry.')
+        return 'error'
+    if initiated:
+        if not concatenation == sequence:
+            print(n)
+            print(segments[n - 1])
+            propagation = piecewisebreadth(len(segments[n-1]), progressions)
+            proteins = convert_queue(concatenation, propagation)
+            result = found_score(proteins)
+            progressions = []
+            for candidate in result[1]:
+                progressions.append(candidate.directions)
+            print(progressions)
+            concatenation = concatenation + segments[n]
+            return concatenate(concatenation, progressions, segments, initiated, sequence, n+1)
+
+        else:
+            print('done')
+            propagation = piecewisebreadth(len(segments[n-1]), progressions)
+            proteins = convert_queue(concatenation, propagation)
+            result = found_score(proteins)
+            return result
+
+    else:
+        print('1')
+        initiation = breadth(len(concatenation))
+        proteins = convert_queue(concatenation, initiation)
+        result = found_score(proteins)
+        for candidate in result[1]:
+            progressions.append(candidate.directions)
+        print(progressions)
+        initiated = True
+        concatenation = concatenation + segments[1]
+        return concatenate(concatenation, progressions, segments, initiated, sequence, 2)
+
+
