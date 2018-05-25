@@ -37,6 +37,8 @@ And choose which algorithm you want to use on which Protein
  
 ## Algorithms
 
+##### be aware, to find out the time your computer needs to run these algorithms find the runtime in [Results](/Results).
+
 #### Random
 It gets the best stability from a number of iterations of random position. The first two proteins, the ones with a relative small state space  the highest stabilities found with randomk are equal to those found with the Random Half and Breadth First (Piecewise) algorithm. For larger proteins, with larger states spaces they will not get the highest stabilities.
 
