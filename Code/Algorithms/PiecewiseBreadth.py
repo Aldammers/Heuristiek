@@ -1,5 +1,6 @@
 from classes import *
 from BreadthFirst import *
+import timeit
 
 proteinsequence = choose()
 invalid = True
@@ -11,7 +12,7 @@ while invalid:
         print("This segment size is not reasonable, please enter a smaller number.")
     else:
         invalid = False
-
+start = timeit.default_timer() 
 protein = Protein(proteinsequence)
 segments = protein.segmentise(argument, 'default')
 print(segments)
@@ -31,7 +32,9 @@ if not result == 'error':
         file.write(directions)
         file.write('\n')
     file.close()
-    print(result[0])
-
+    stop = timeit.default_timer()
     for protein in result[1]:
         protein.grit.reveal()
+        
+    print(result[0])
+    print("Runtime:", stop - start, "seconds")
