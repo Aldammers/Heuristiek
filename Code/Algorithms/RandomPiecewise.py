@@ -1,4 +1,4 @@
-import classes as c
+import Classes.classes as c
 from random import randint
 import copy
 
