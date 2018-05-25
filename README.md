@@ -56,4 +56,11 @@ python PiecewiseBreadth.py
 #### Breadth First
 
 #### Breadth first PieceWise
+
+### How to use Breadth First Piecewise:
+
+        1. Start main: 'python main.py'
+        2. Choose an algorithm (1 to 9)
+        3. Choose Piece Size, to get optimized result look at results table
+        
  
