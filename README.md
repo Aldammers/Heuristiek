@@ -25,7 +25,10 @@ To run the algorithms
 python Main.py
 ```
 
-And choose which algorithm you want to use on which Protein
+
+        1. Start main: 'python main.py'
+        2. Choose a protein
+        3. Choose an algorithm to run
 
 
 
@@ -37,7 +40,7 @@ And choose which algorithm you want to use on which Protein
  
 ## Algorithms
 
-##### be aware, to find out the time your computer needs to run these algorithms find the runtime in [Results](/Results).
+##### Be aware, to find out the time your computer needs to run these algorithms look up the runtime in [Results](/Results).
 
 #### Random
 It gets the best stability from a number of iterations of random position. The first two proteins, the ones with a relative small state space  the highest stabilities found with randomk are equal to those found with the Random Half and Breadth First (Piecewise) algorithm. For larger proteins, with larger states spaces they will not get the highest stabilities.
@@ -46,13 +49,11 @@ It gets the best stability from a number of iterations of random position. The f
 Same as the random algorithm, but it wil cut the protein in 2 pieces. And then finds the best stability for the first piece in a given number of iterations. And then joins the second piece in a number of iterations to the first piece. 
 
 #### Breadth First
+An algorithm that starts at the root of the protein chain and explores the 3 directions it can build further. And it checks which direction is the best one, multiple are possible, and it goes further with those options. Because of exploring 3 directions for every amino acid it is very costly in the memory use. And can only be used with the first two protein chains.
 
 #### Breadth first PieceWise
 
-### How to use Breadth First Piecewise:
 
-        1. Start main: 'python main.py'
-        2. Choose a protein
-        3. Choose an algorithm to run
+
         
  
