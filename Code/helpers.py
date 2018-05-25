@@ -1,7 +1,7 @@
-import classes as c
-import RandomFold as rf
-import RandomPiecewise as rp
-import BreadthFirst as bf
+import Classes.classes as c
+import Algorithms.RandomFold as rf
+import Algorithms.RandomPiecewise as rp
+import Algorithms.BreadthFirst as bf
 import timeit as t
 
 def ChooseProtein():
