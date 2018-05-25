@@ -161,7 +161,6 @@ def concatenate(concatenation, progressions, segments, initiated, sequence, n):
             progressions.append(candidate.directions)
         initiated = True
         if len(segments) == 1:
-            proteins = convertQueue(concatenation, initiation)
             result = foundScore(proteins)
             return result
         concatenation = concatenation + segments[1]
