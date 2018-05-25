@@ -53,13 +53,13 @@ To find our research and results and conclusions check out our experimentation: 
  Python 3.6.5
  
  
-#### Algorithms
+## Algorithms
 
-## Random
+#### Random
 
-## Random Halfs
+#### Random Halfs
 
-## Breadth First
+#### Breadth First
 
-## Breadth first PieceWise
+#### Breadth first PieceWise
  
