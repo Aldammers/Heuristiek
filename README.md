@@ -52,7 +52,7 @@ Same as the random algorithm, but it wil cut the protein in 2 pieces. And then f
 An algorithm that starts at the root of the protein chain and explores the 3 directions it can build further. And it checks which direction is the best one, multiple are possible, and it goes further with those options. Because of exploring 3 directions for every amino acid it is very costly in the memory use. And can only be used with the first two protein chains.
 
 #### Breadth first PieceWise
-The Protein chain is chopped in pieces, which the size are hard coded into the algorithm and researched to be the most effective in getting the higgest stability. 
+The Protein chain is chopped in pieces, which the size are hard coded into the algorithm and researched to be the most effective in getting the higgest stability. The way the protein get segmented is predecided based on common sense and empirical findings. First of all, unless it is the last, there cannot be a segment ending in a P since the last amino acid then would not be able to contribute to the score, so computing it inbetween would be a waste of time. Secondly, if the residu of best proteins after appending a segment gets larger, the next segment should be tiny, to reduce the running time and try to prevent the options from exploding. Furthermore, the average segment size is kept rather high to maintain more precision in finding the optimal solution.
 
 
         
