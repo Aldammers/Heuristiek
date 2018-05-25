@@ -152,7 +152,7 @@ def ChooseAlgortihm(proteinsequence):
         for protein in result[1]:
             protein.grit.reveal()
 
-        print("The best possible score for this protein is", result[0], "and these are all the best foldings there are.")
+        print("The best score we found for this protein using a particular segmentation (see documentation) is", result[0], "and these are all the best foldings that were found with that score.")
         print("It took", stop - start, "seconds.")
         
         
