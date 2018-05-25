@@ -1,6 +1,3 @@
-# aanpassingen aangeven
-
-
 # protein class
 class Protein:
 
@@ -50,11 +47,11 @@ class Protein:
         return - upper_bound
 
     # calculates coordinates using directions, starting in the middle of the grit
-    def directions_to_coordinates(self, directions):
-        self.directions = directions
+    def directions_to_coordinates(self):
+
         self.coordinates[0] = [self.grit.size // 2, self.grit.size // 2]
         i = 1
-        for direction in directions:
+        for direction in self.directions:
 
             self.coordinates[i] = [self.coordinates[i - 1][0] + 2*direction[0], self.coordinates[i - 1][1] + 2*direction[1]]
             i += 1
@@ -149,6 +146,38 @@ class Protein:
 
         return -score//2
 
+    def segmentise(self, argument, method):
+        if method == 'default':
+            segment_size = argument
+            segments = []
+            c = 0
+            while c < len(self.sequence) - segment_size:
+                segments.append(self.sequence[c:c+segment_size])
+                c += segment_size
+            segments.append(self.sequence[c:len(self.sequence)])
+            return segments
+
+        elif method == 'manual':
+            segments = argument
+            return segments
+
+        elif method == 'cleverly':
+            segment = self.sequence[0]
+            H = self.sequence.count('H')
+            P = self.sequence.count('P')
+            segments = []
+            c = 0
+            for i in range(self.length):
+                segment = self.sequence[c:i]
+                partialH = segment.count('H')
+                partialP = segment.count('P')
+                if i - c > 7:
+                    segments.append(segment)
+                    c = i
+                elif H * partialP >= P * partialH:
+                    segments.append(segment)
+                    c = i
+            return segments
 
 
 
@@ -227,11 +256,11 @@ class Grit:
     def is_valid(self, m, n):
         directions = []
         if self.grit[m][n+2] == ' ':
-            directions.append([0,2])
+            directions.append([0,1])
         if self.grit[m][n-2] == ' ':
-            directions.append([0,-2])
+            directions.append([0,-1])
         if self.grit[m-2][n] == ' ':
-            directions.append([-2,0])
+            directions.append([-1,0])
         if self.grit[m+2][n] == ' ':
-            directions.append([2,0])
+            directions.append([1,0])
         return directions
