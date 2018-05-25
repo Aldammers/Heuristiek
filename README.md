@@ -49,4 +49,17 @@ To find our research and results and conclusions check out our experimentation: 
 
 
 
-## Built With
+### Built With
+ Python 3.6.5
+ 
+ 
+#### Algorithms
+
+## Random
+
+## Random Halfs
+
+## Breadth First
+
+## Breadth first PieceWise
+ 
