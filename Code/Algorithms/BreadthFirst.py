@@ -147,15 +147,13 @@ def concatenate(concatenation, progressions, segments, initiated, sequence, n):
         return 'error'
     if initiated:
         if not concatenation == sequence:
-            print(n)
-            print(segments[n - 1])
             propagation = piecewisebreadth(len(segments[n-1]), progressions)
             proteins = convert_queue(concatenation, propagation)
             result = found_score(proteins)
             progressions = []
             for candidate in result[1]:
                 progressions.append(candidate.directions)
-            print(progressions)
+            
             concatenation = concatenation + segments[n]
             return concatenate(concatenation, progressions, segments, initiated, sequence, n+1)
 
@@ -173,7 +171,6 @@ def concatenate(concatenation, progressions, segments, initiated, sequence, n):
         result = found_score(proteins)
         for candidate in result[1]:
             progressions.append(candidate.directions)
-        print(progressions)
         initiated = True
         concatenation = concatenation + segments[1]
         return concatenate(concatenation, progressions, segments, initiated, sequence, 2)
