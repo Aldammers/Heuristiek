@@ -43,9 +43,9 @@ python PiecewiseBreadth.py
 ### Documents
 
 
-Our algorithms and detials about them go into out algorithm folder: [Algorithms](/pp/algorithms).
+Our algorithms and detials about them go into out algorithm folder: [Algorithms](/codes/algorithms).
 
-To find our research and results and conclusions check out our experimentation: [Results](pp/results).
+To find our research and results and conclusions check out our experimentation: [Results](results).
 
 
 
