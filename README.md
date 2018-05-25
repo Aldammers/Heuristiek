@@ -19,27 +19,15 @@ To find our research and results and conclusions check out our experimentation: 
 
 ### Testing
 
-Om het random algoritme te laten draaien gebruik de instructie:
+To run the algorithms
 
 ```
-python MainRandom.py
+python Main.py
 ```
 
-Voor de Breath-First:
+And choose which algorithm you want to use on which Protein
 
-```
-python MainBreadth.py
-```
 
-Random Piecewise:
-```
-python MainRP.py
-```
-
-PieceWise Breadth:
-```
-python PiecewiseBreadth.py
-```
 
 
 
@@ -50,8 +38,10 @@ python PiecewiseBreadth.py
 ## Algorithms
 
 #### Random
+It gets the best stability from a number of iterations of random position. The first two proteins, the ones with a relative small state space  the highest stabilities found with randomk are equal to those found with the Random Half and Breadth First (Piecewise) algorithm. For larger proteins, with larger states spaces they will not get the highest stabilities.
 
 #### Random Halfs
+Same as the random algorithm, but it wil cut the protein in 2 pieces. And then finds the best stability for the first piece in a given number of iterations. And then joins the second piece in a number of iterations to the first piece. 
 
 #### Breadth First
 
