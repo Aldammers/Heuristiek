@@ -1,4 +1,5 @@
 ###Results 10.000 iteraties
+
 | Code: | Protein                                            | Random       |BreadthFirst| Random Halfs      | Breadth PieceWise |
 |-------|----------------------------------------------------|--------------|------------|-------------------|-------------------|
 | P0    | HHPHHHPH                                           | -3           |  -3        | -3                | -3                |
