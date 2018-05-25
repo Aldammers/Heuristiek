@@ -2,24 +2,10 @@ from classes import *
 import queue
 import copy
 
-def choose():
-
-    file = open("data.txt","r")
-    data = file.readlines()
-    for i in range(len(data)):
-        print(i + 1, data[i], end='')
-    print()
-    protein_number = int(input("Enter the number of he protein you wish to fold: "))
-    if protein_number in range(1,10):
-        proteinsequence = data[protein_number - 1]
-        proteinsequence = proteinsequence.rstrip()
-    return proteinsequence
-
 def validate(directions, n):
     plain = [[0 for x in range(2*n - 1)] for y in range(2*n - 1)]
     options = []
     has_bend = False
-
 
     x, y = n - 1, n - 1
 
@@ -71,7 +57,7 @@ def breadth(length):
 
     return possibilities
 
-def convert_queue(sequence, possibilities):
+def convertQueue(sequence, possibilities):
     proteins = []
     while not possibilities.empty():
 
@@ -79,12 +65,12 @@ def convert_queue(sequence, possibilities):
         protein = Protein(sequence)
         protein.directions = directions
         #protein.directions_to_coordinates()
-        protein.fill_grit()
+        protein.fillGrit()
         proteins.append(protein)
 
     return proteins
 
-def found_score(proteins):
+def foundScore(proteins):
     best_score = 0
     good_protein = Protein('H')
     good_proteins = []
@@ -92,9 +78,7 @@ def found_score(proteins):
 
     for protein in proteins:
 
-        #protein.grit.reveal()
-
-        score = protein.ez_score()
+        score = protein.ezScore()
 
         if score < best_score:
             good_proteins = []
@@ -114,7 +98,7 @@ def found_score(proteins):
 
 # extention for piecewise method
 
-def piecewisebreadth(length, progressions):
+def piecewiseBreadth(length, progressions):
 
     possibilities = queue.Queue()
     for progression in progressions:
@@ -147,32 +131,36 @@ def concatenate(concatenation, progressions, segments, initiated, sequence, n):
         return 'error'
     if initiated:
         if not concatenation == sequence:
-            propagation = piecewisebreadth(len(segments[n-1]), progressions)
-            proteins = convert_queue(concatenation, propagation)
-            result = found_score(proteins)
+            print(n)
+            print(segments[n - 1])
+            propagation = piecewiseBreadth(len(segments[n-1]), progressions)
+            proteins = convertQueue(concatenation, propagation)
+            result = foundScore(proteins)
             progressions = []
             for candidate in result[1]:
                 progressions.append(candidate.directions)
-            
+            print(progressions)
             concatenation = concatenation + segments[n]
             return concatenate(concatenation, progressions, segments, initiated, sequence, n+1)
 
         else:
             print('done')
-            propagation = piecewisebreadth(len(segments[n-1]), progressions)
-            proteins = convert_queue(concatenation, propagation)
-            result = found_score(proteins)
+            propagation = piecewiseBreadth(len(segments[n-1]), progressions)
+            proteins = convertQueue(concatenation, propagation)
+            result = foundScore(proteins)
             return result
 
     else:
         print('1')
         initiation = breadth(len(concatenation))
-        proteins = convert_queue(concatenation, initiation)
-        result = found_score(proteins)
+        proteins = convertQueue(concatenation, initiation)
+        result = foundScore(proteins)
         for candidate in result[1]:
             progressions.append(candidate.directions)
+        print(progressions)
         initiated = True
-        concatenation = concatenation + segments[1]
+        if not concatenation == sequence:
+            concatenation = concatenation + segments[1]
         return concatenate(concatenation, progressions, segments, initiated, sequence, 2)
 
 
